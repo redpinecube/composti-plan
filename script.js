@@ -1,8 +1,46 @@
-var map = L.map('map').setView([47.7511, -120.7401], 7);  // Center on Washington State
+var map = L.map('map').setView([47.7511, -120.7401], 7); 
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
+
+const iconBaseUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/';
+
+const wasteIcons = {
+  Recycling: new L.Icon({
+    iconUrl: iconBaseUrl + 'marker-icon-black.png',
+    shadowUrl: iconBaseUrl + 'marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  }),
+  Landfill: new L.Icon({
+    iconUrl: iconBaseUrl + 'marker-icon-black.png',
+    shadowUrl: iconBaseUrl + 'marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  }),
+  Organic: new L.Icon({
+    iconUrl: iconBaseUrl + 'marker-icon-black.png',
+    shadowUrl: iconBaseUrl + 'marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  }),
+  Hazardous: new L.Icon({
+    iconUrl: iconBaseUrl + 'marker-icon-black.png',
+    shadowUrl: iconBaseUrl + 'marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  })
+};
+
 
 const markersData = [
     { lat: 47.6062, lon: -122.3321, address: 'Seattle, WA', waste_type: 'Recycling', expected_amt: 5, deadline: '2025-06-01' },
@@ -19,8 +57,11 @@ const markersData = [
 
 markersData.forEach(markerData => {
     const { lat, lon, address, waste_type, expected_amt, deadline } = markerData;
-    const marker = L.marker([lat, lon]).addTo(map);
-    
+
+    const marker = L.marker([lat, lon], {
+        icon: wasteIcons[waste_type] || defaultIcon
+    }).addTo(map);
+
     marker.bindPopup(`
         <b>Address:</b> ${address}<br>
         <b>Waste Type:</b> ${waste_type}<br>

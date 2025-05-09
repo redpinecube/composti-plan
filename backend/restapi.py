@@ -63,6 +63,8 @@ class DisposalRequestResponse(BaseModel):
     created_at: datetime
     business: BusinessResponse 
     timeslots: List[TimeslotResponse]
+    longitude: float
+    latitude: float
 
     class Config:
         from_attributes = True
